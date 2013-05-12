@@ -1,23 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Wintellect.PowerCollections;
-
-namespace GameFifteen
+﻿namespace GameFifteen
 {
-	// pozdravi na vsi4ki ot pernik!
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Wintellect.PowerCollections;
 
     class GameFifteen
     {
         static Random r = new Random();
         public const int MatrixLength = 4;
-        static int[,] sol = new int[MatrixLength, MatrixLength] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, 
-                                                                     { 9, 10, 11, 12 }, { 13, 14, 15, 16 } };
+        static int[,] sol = new int[MatrixLength, MatrixLength] { 
+            { 1, 2, 3, 4 }, 
+            { 5, 6, 7, 8 }, 
+            { 9, 10, 11, 12 }, 
+            { 13, 14, 15, 16 }
+        };
         static int emptyRow = 3;
         static int emptyCol = 3;
-        static int[,] currentMatrix = new int[MatrixLength, MatrixLength] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 },
-                                                                          { 9, 10, 11, 12 }, { 13, 14, 15, 16 } };
+        static int[,] currentMatrix = new int[MatrixLength, MatrixLength] {
+            { 1, 2, 3, 4 },
+            { 5, 6, 7, 8 },
+            { 9, 10, 11, 12 },
+            { 13, 14, 15, 16 } 
+        };
+
         static int[] dirR = new int[4] { -1, 0, 1, 0 };
         static int[] dirC = new int[4] { 0, 1, 0, -1 };
         static OrderedMultiDictionary<int, string> scoreboard = new OrderedMultiDictionary<int, string>(true);
@@ -33,7 +40,9 @@ namespace GameFifteen
                     value++;
                 }
             }
+
             int ramizeMoves = r.Next(10, 21);
+
             for (int i = 0; i < ramizeMoves; i++)
             {
                 int randomDirection = r.Next(4);
@@ -49,12 +58,10 @@ namespace GameFifteen
                     MoveEmptyCell(newRow, newCol);
                 }
             }
+
             if (IfEqualMatrix())
             {
                 GenerateMatrix();
-
-
-
             }
         }
 
@@ -64,8 +71,6 @@ namespace GameFifteen
             {
                 return true;
             }
-
-
 
             return false;
         }
@@ -77,9 +82,6 @@ namespace GameFifteen
             currentMatrix[emptyRow, emptyCol] = swapValue;
             emptyRow = newRow;
             emptyCol = newCol;
-
-
-
         }
 
         private static void PrintMatrix()
@@ -94,15 +96,9 @@ namespace GameFifteen
                     {
                         Console.Write("  {0}", currentMatrix[i, j]);
                     }
-
-
-
                     else
                     {
                         if (currentMatrix[i, j] == 16)
-
-
-
                         {
                             Console.Write("   ");
                         }
@@ -113,13 +109,11 @@ namespace GameFifteen
                     }
                     if (j == MatrixLength - 1)
                     {
-
-
-
                         Console.Write(" |\n");
                     }
                 }
             }
+
             Console.WriteLine(" -------------");
         }
 
@@ -134,9 +128,6 @@ namespace GameFifteen
             for (int i = 0; i < MatrixLength; i++)
             {
                 for (int j = 0; j < MatrixLength; j++)
-
-
-
                 {
                     if (currentMatrix[i, j] != sol[i, j])
                     {
@@ -144,6 +135,7 @@ namespace GameFifteen
                     }
                 }
             }
+
             return true;
         }
 
@@ -158,6 +150,7 @@ namespace GameFifteen
             }
             return false;
         }
+
         private static void RemoveLastScore()
         {
             if (scoreboard.Last().Value.Count > 0)
@@ -173,6 +166,7 @@ namespace GameFifteen
                 scoreboard.Remove(keys.Last());
             }
         }
+
         private static void GameWon(int moves)
         {
             Console.WriteLine("Congratulations! You won the game in {0} moves.", moves);
@@ -181,6 +175,7 @@ namespace GameFifteen
             {
                 scorersCount += scorer.Value.Count;
             }
+
             if (scorersCount == 5)
             {
                 if (IfGoesToBoard(moves))
@@ -194,12 +189,14 @@ namespace GameFifteen
                 tocki(moves);
             }
         }
+
         private static void tocki(int moves)
         {
             Console.Write("Please enter your name for the top scoreboard: ");
             string name = Console.ReadLine();
             scoreboard.Add(moves, name);
         }
+
         private static void pe4at()
         {
             if (scoreboard.Count == 0)
@@ -211,8 +208,6 @@ namespace GameFifteen
             int i = 1;
             foreach (var score in scoreboard)
             {
-
-
                 foreach (var value in score.Value)
                 {
                     Console.WriteLine("{0}. {1} --> {2} moves", i, value, score.Key);
@@ -227,34 +222,33 @@ namespace GameFifteen
             GenerateMatrix();
             PrintWelcome();
             PrintMatrix();
-			MainAlgorithm();
-		}
-  
-		private static void MainAlgorithm()
-		{
-			int moves = 0;
-			Console.Write("Enter a number to move: ");
-			string inputString = Console.ReadLine();
-			while (inputString.CompareTo("exit") != 0)
-			{
-				ExecuteComand(inputString, ref moves);
-				if (IfEqualMatrix())
-				{
-					GameWon(moves);
-					pe4at();
-					GenerateMatrix();
-					PrintWelcome();
-					PrintMatrix();
-					moves = 0;
-				}
-				Console.Write("Enter a number to move: ");
-				inputString = Console.ReadLine();
+            MainAlgorithm();
+        }
 
+        private static void MainAlgorithm()
+        {
+            int moves = 0;
+            Console.Write("Enter a number to move: ");
+            string inputString = Console.ReadLine();
+            while (inputString.CompareTo("exit") != 0)
+            {
+                ExecuteComand(inputString, ref moves);
+                if (IfEqualMatrix())
+                {
+                    GameWon(moves);
+                    pe4at();
+                    GenerateMatrix();
+                    PrintWelcome();
+                    PrintMatrix();
+                    moves = 0;
+                }
 
+                Console.Write("Enter a number to move: ");
+                inputString = Console.ReadLine();
+            }
+            Console.WriteLine("Good bye!");
+        }
 
-			}
-			Console.WriteLine("Good bye!");
-		}
         private static void ExecuteComand(string inputString, ref int moves)
         {
             switch (inputString)
@@ -279,6 +273,7 @@ namespace GameFifteen
                         Console.WriteLine("Invalid comand!");
                         break;
                     }
+
                     if (number < 16 && number > 0)
                     {
                         int newRow = 0;
@@ -295,6 +290,7 @@ namespace GameFifteen
                                 }
                                 continue;
                             }
+
                             if (currentMatrix[newRow, newCol] == number)
                             {
                                 MoveEmptyCell(newRow, newCol);
@@ -302,6 +298,7 @@ namespace GameFifteen
                                 PrintMatrix();
                                 break;
                             }
+
                             if (i == 3)
                             {
                                 Console.WriteLine("Invalid move");
@@ -313,11 +310,9 @@ namespace GameFifteen
                         Console.WriteLine("Invalid move");
                         break;
                     }
+
                     break;
             }
-
-
-
         }
     }
 }
