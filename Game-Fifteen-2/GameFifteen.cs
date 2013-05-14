@@ -177,7 +177,7 @@
             string inputString = Console.ReadLine();
             while (inputString.CompareTo("exit") != 0)
             {
-                ExecuteComand(inputString, ref moves);
+                ExecuteComand(inputString, moves);
                 if (IfEqualMatrix())
                 {
                     GameWon(moves);
@@ -195,7 +195,7 @@
             Console.WriteLine("Good bye!");
         }
 
-        private static void ExecuteComand(string inputString, ref int moves)
+        private static void ExecuteComand(string inputString, int moves)
         {
             if (inputString == "restart")
 	        {
@@ -211,11 +211,11 @@
             }
             else
             {
-                 MakeMove(inputString, ref moves);
+                 MakeMove(inputString, moves);
             }
         }
   
-        private static void MakeMove(string inputString, ref int moves)
+        private static void MakeMove(string inputString, int moves)
         {
             int number = 0;
             bool isNumber = int.TryParse(inputString, out number);
