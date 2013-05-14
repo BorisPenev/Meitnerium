@@ -47,7 +47,7 @@
                 }
             }
 
-            int randomMoves = random.Next(10, 21);
+            int randomMoves = random.Next(4, 7);
 
             for (int i = 0; i < randomMoves; i++)
             {
@@ -256,70 +256,72 @@
 
         private static void ExecuteComand(string inputString, ref int moves)
         {
-            switch (inputString)
+            if (inputString == "restart")
+	        {
+                moves = 0;                    
+                GenerateMatrix();
+                PrintWelcome();
+                PrintMatrix();               
+	        }
+            else if(inputString == "top")
             {
-                case "restart":
-                    moves = 0;                    
-                    GenerateMatrix();
-                    PrintWelcome();
-                    PrintMatrix();
-                    break;
+                PrintScoreBoard();
+                PrintMatrix();                    
+            }
+            else
+            {
+                 MakeMove(inputString, ref moves);
+            }
+        }
+  
+        private static void MakeMove(string inputString, ref int moves)
+        {
+            int number = 0;
+            bool isNumber = int.TryParse(inputString, out number);
+            if (!isNumber)
+            {
+                Console.WriteLine("Invalid comand!");
+                return;
+            }
 
-                case "top":
-                    PrintScoreBoard();
-                    PrintMatrix();
-                    break;
+            if (number < 16 && number > 0)
+            {
+                int newRow = 0;
+                int newCol = 0;
+                for (int i = 0; i < 4; i++)
+                {
+                    newRow = emptyRow + directionRow[i];
+                    newCol = emptyCol + directionCol[i];
 
-                default:
-                    int number = 0;
-                    bool isNumber = int.TryParse(inputString, out number);
-                    if (!isNumber)
+                    if (IfOutOfMatrix(newRow, newCol))
                     {
-                        Console.WriteLine("Invalid comand!");
+                        if (i == 3)
+                        {
+                            Console.WriteLine("Invalid move");
+                        }
+
+                        continue;
+                    }
+
+                    if (currentMatrix[newRow, newCol] == number)
+                    {
+                        MoveEmptyCell(newRow, newCol);
+                        moves++;
+                        PrintMatrix();
                         break;
                     }
 
-                    if (number < 16 && number > 0)
-                    {
-                        int newRow = 0;
-                        int newCol = 0;
-                        for (int i = 0; i < 4; i++)
-                        {
-                            newRow = emptyRow + directionRow[i];
-                            newCol = emptyCol + directionCol[i];
-
-                            if (IfOutOfMatrix(newRow, newCol))
-                            {
-                                if (i == 3)
-                                {
-                                    Console.WriteLine("Invalid move");
-                                }
-
-                                continue;
-                            }
-
-                            if (currentMatrix[newRow, newCol] == number)
-                            {
-                                MoveEmptyCell(newRow, newCol);
-                                moves++;
-                                PrintMatrix();
-                                break;
-                            }
-
-                            if (i == 3)
-                            {
-                                Console.WriteLine("Invalid move");
-                            }
-                        }
-                    }
-                    else
+                    if (i == 3)
                     {
                         Console.WriteLine("Invalid move");
-                        break;
                     }
-
-                    break;
+                }
             }
+            else
+            {
+                Console.WriteLine("Invalid move");
+                return;
+            }           
         }
     }
 }
