@@ -22,10 +22,10 @@
         static int emptyCol = 3;
         static int[,] currentMatrix = new int[MatrixLength, MatrixLength] 
         {
-            { 1, 2, 3, 4 },
-            { 5, 6, 7, 8 },
-            { 9, 10, 11, 12 },
-            { 13, 14, 15, 16 } 
+            { 1, 2, 3, 4 }, 
+            { 5, 6, 7, 8 }, 
+            { 9, 10, 11, 12 }, 
+            { 13, 14, 15, 16 }  
         };
 
         static int[] directionRow = new int[4] { -1, 0, 1, 0 };
@@ -35,6 +35,8 @@
         private static void GenerateMatrix()
         {
             int value = 1;
+            emptyRow = 3;
+            emptyCol = 3;
 
             for (int i = 0; i < MatrixLength; i++)
             {
@@ -257,7 +259,7 @@
             switch (inputString)
             {
                 case "restart":
-                    moves = 0;
+                    moves = 0;                    
                     GenerateMatrix();
                     PrintWelcome();
                     PrintMatrix();
