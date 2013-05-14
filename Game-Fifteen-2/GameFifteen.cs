@@ -10,7 +10,7 @@
     {
         static Random random = new Random();
         public const int MatrixLength = 4;
-        static int[,] sol = new int[MatrixLength, MatrixLength]
+        static int[,] solvedMatrix = new int[MatrixLength, MatrixLength]
         { 
             { 1, 2, 3, 4 }, 
             { 5, 6, 7, 8 }, 
@@ -45,9 +45,9 @@
                 }
             }
 
-            int ramizeMoves = random.Next(10, 21);
+            int randomMoves = random.Next(10, 21);
 
-            for (int i = 0; i < ramizeMoves; i++)
+            for (int i = 0; i < randomMoves; i++)
             {
                 int randomDirection = random.Next(4);
                 int newRow = emptyRow + directionRow[randomDirection];
@@ -118,7 +118,7 @@
 
         private static void PrintWelcome()
         {
-            Console.WriteLine("Welcome to the game “15”. Please try to arrange the numbers sequentially.\n" +
+            Console.WriteLine("Welcome to the game “15”.\n Please try to arrange the numbers sequentially.\n" +
             "Use 'top' to view the top scoreboard, 'restart' to start a new game and \n'exit' to quit the game.");
         }
 
@@ -128,7 +128,7 @@
             {
                 for (int j = 0; j < MatrixLength; j++)
                 {
-                    if (currentMatrix[i, j] != sol[i, j])
+                    if (currentMatrix[i, j] != solvedMatrix[i, j])
                     {
                         return false;
                     }
