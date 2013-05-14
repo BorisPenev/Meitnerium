@@ -8,7 +8,7 @@
 
     class GameFifteen
     {
-        static Random r = new Random();
+        static Random random = new Random();
         public const int MatrixLength = 4;
         static int[,] sol = new int[MatrixLength, MatrixLength] { 
             { 1, 2, 3, 4 }, 
@@ -16,6 +16,7 @@
             { 9, 10, 11, 12 }, 
             { 13, 14, 15, 16 }
         };
+
         static int emptyRow = 3;
         static int emptyCol = 3;
         static int[,] currentMatrix = new int[MatrixLength, MatrixLength] {
@@ -25,13 +26,14 @@
             { 13, 14, 15, 16 } 
         };
 
-        static int[] dirR = new int[4] { -1, 0, 1, 0 };
-        static int[] dirC = new int[4] { 0, 1, 0, -1 };
+        static int[] directionRow = new int[4] { -1, 0, 1, 0 };
+        static int[] directionCol = new int[4] { 0, 1, 0, -1 };
         static OrderedMultiDictionary<int, string> scoreboard = new OrderedMultiDictionary<int, string>(true);
 
         private static void GenerateMatrix()
         {
             int value = 1;
+
             for (int i = 0; i < MatrixLength; i++)
             {
                 for (int j = 0; j < MatrixLength; j++)
@@ -41,14 +43,15 @@
                 }
             }
 
-            int ramizeMoves = r.Next(10, 21);
+            int ramizeMoves = random.Next(10, 21);
 
             for (int i = 0; i < ramizeMoves; i++)
             {
-                int randomDirection = r.Next(4);
-                int newRow = emptyRow + dirR[randomDirection];
-                int newCol = emptyCol + dirC[randomDirection];
-                if (IfOutOfMAtrix(newRow, newCol))
+                int randomDirection = random.Next(4);
+                int newRow = emptyRow + directionRow[randomDirection];
+                int newCol = emptyCol + directionCol[randomDirection];
+
+                if (IfOutOfMatrix(newRow, newCol))
                 {
                     i--;
                     continue;
@@ -65,7 +68,7 @@
             }
         }
 
-        private static bool IfOutOfMAtrix(int row, int col)
+        private static bool IfOutOfMatrix(int row, int col)
         {
             if (row >= MatrixLength || row < 0 || col < 0 || col >= MatrixLength)
             {
@@ -280,9 +283,9 @@
                         int newCol = 0;
                         for (int i = 0; i < 4; i++)
                         {
-                            newRow = emptyRow + dirR[i];
-                            newCol = emptyCol + dirC[i];
-                            if (IfOutOfMAtrix(newRow, newCol))
+                            newRow = emptyRow + directionRow[i];
+                            newCol = emptyCol + directionCol[i];
+                            if (IfOutOfMatrix(newRow, newCol))
                             {
                                 if (i == 3)
                                 {
