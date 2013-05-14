@@ -10,7 +10,8 @@
     {
         static Random random = new Random();
         public const int MatrixLength = 4;
-        static int[,] sol = new int[MatrixLength, MatrixLength] { 
+        static int[,] sol = new int[MatrixLength, MatrixLength]
+        { 
             { 1, 2, 3, 4 }, 
             { 5, 6, 7, 8 }, 
             { 9, 10, 11, 12 }, 
@@ -19,7 +20,8 @@
 
         static int emptyRow = 3;
         static int emptyCol = 3;
-        static int[,] currentMatrix = new int[MatrixLength, MatrixLength] {
+        static int[,] currentMatrix = new int[MatrixLength, MatrixLength] 
+        {
             { 1, 2, 3, 4 },
             { 5, 6, 7, 8 },
             { 9, 10, 11, 12 },
@@ -103,6 +105,7 @@
                     {                      
                         Console.Write("   ");                        
                     }
+
                     if (j == MatrixLength - 1)
                     {
                         Console.Write(" |\n");
@@ -144,6 +147,7 @@
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -177,29 +181,30 @@
                 if (IfGoesToBoard(moves))
                 {
                     RemoveLastScore();
-                    tocki(moves);
+                    Points(moves);
                 }
             }
             else
             {
-                tocki(moves);
+                Points(moves);
             }
         }
 
-        private static void tocki(int moves)
+        private static void Points(int moves)
         {
             Console.Write("Please enter your name for the top scoreboard: ");
             string name = Console.ReadLine();
             scoreboard.Add(moves, name);
         }
 
-        private static void pe4at()
+        private static void PrintScoreBoard()
         {
             if (scoreboard.Count == 0)
             {
                 Console.WriteLine("Scoreboard is empty");
                 return;
             }
+
             Console.WriteLine("Scoreboard:");
             int i = 1;
             foreach (var score in scoreboard)
@@ -210,6 +215,7 @@
                     i++;
                 }
             }
+
             Console.WriteLine();
         }
 
@@ -232,7 +238,7 @@
                 if (IfEqualMatrix())
                 {
                     GameWon(moves);
-                    pe4at();
+                    PrintScoreBoard();
                     GenerateMatrix();
                     PrintWelcome();
                     PrintMatrix();
@@ -242,6 +248,7 @@
                 Console.Write("Enter a number to move: ");
                 inputString = Console.ReadLine();
             }
+
             Console.WriteLine("Good bye!");
         }
 
@@ -257,7 +264,7 @@
                     break;
 
                 case "top":
-                    pe4at();
+                    PrintScoreBoard();
                     PrintMatrix();
                     break;
 
@@ -278,12 +285,14 @@
                         {
                             newRow = emptyRow + directionRow[i];
                             newCol = emptyCol + directionCol[i];
+
                             if (IfOutOfMatrix(newRow, newCol))
                             {
                                 if (i == 3)
                                 {
                                     Console.WriteLine("Invalid move");
                                 }
+
                                 continue;
                             }
 
