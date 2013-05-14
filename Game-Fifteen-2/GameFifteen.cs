@@ -97,20 +97,13 @@
                 Console.Write("|");
                 for (int j = 0; j < MatrixLength; j++)
                 {
-                    if (currentMatrix[i, j] <= 9)
+                    if (currentMatrix[i, j] != 16)
                     {
-                        Console.Write("  {0}", currentMatrix[i, j]);
+                        Console.Write("{0,3}", currentMatrix[i, j]);
                     }
                     else
-                    {
-                        if (currentMatrix[i, j] == 16)
-                        {
-                            Console.Write("   ");
-                        }
-                        else
-                        {
-                            Console.Write(" {0}", currentMatrix[i, j]);
-                        }
+                    {                      
+                        Console.Write("   ");                        
                     }
 
                     if (j == MatrixLength - 1)
