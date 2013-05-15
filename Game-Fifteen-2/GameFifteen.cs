@@ -4,25 +4,7 @@
 
     class GameFifteen
     {
-        static Random random = new Random();
-        public const int MatrixLength = 4;
-        static int[,] solvedMatrix = new int[MatrixLength, MatrixLength]
-        { 
-            { 1, 2, 3, 4 }, 
-            { 5, 6, 7, 8 }, 
-            { 9, 10, 11, 12 }, 
-            { 13, 14, 15, 16 }
-        };
-
-        static int emptyRow = 3;
-        static int emptyCol = 3;
-        static int[,] currentMatrix = new int[MatrixLength, MatrixLength] 
-        {
-            { 1, 2, 3, 4 }, 
-            { 5, 6, 7, 8 }, 
-            { 9, 10, 11, 12 }, 
-            { 13, 14, 15, 16 }  
-        };
+        
 
         static int[] directionRow = new int[4] { -1, 0, 1, 0 };
         static int[] directionCol = new int[4] { 0, 1, 0, -1 };
@@ -31,27 +13,27 @@
         private static void GenerateMatrix()
         {
             int value = 1;
-            emptyRow = 3;
-            emptyCol = 3;
+            Matrix.emptyRow = 3;
+            Matrix.emptyCol = 3;
 
-            for (int i = 0; i < MatrixLength; i++)
+            for (int i = 0; i < Matrix.MatrixLength; i++)
             {
-                for (int j = 0; j < MatrixLength; j++)
+                for (int j = 0; j < Matrix.MatrixLength; j++)
                 {
-                    currentMatrix[i, j] = value;
+                    Matrix.currentMatrix[i, j] = value;
                     value++;
                 }
             }
 
-            int randomMoves = random.Next(4, 7);
+            int randomMoves = Matrix.random.Next(4, 7);
 
             for (int i = 0; i < randomMoves; i++)
             {
-                int randomDirection = random.Next(4);
-                int newRow = emptyRow + directionRow[randomDirection];
-                int newCol = emptyCol + directionCol[randomDirection];
+                int randomDirection = Matrix.random.Next(4);
+                int newRow = Matrix.emptyRow + directionRow[randomDirection];
+                int newCol = Matrix.emptyCol + directionCol[randomDirection];
 
-                if (IfOutOfMatrix(newRow, newCol))
+                if (Matrix.IfOutOfMatrix(newRow, newCol))
                 {
                     i--;
                     continue;
@@ -62,79 +44,32 @@
                 }
             }
 
-            if (IfEqualMatrix())
+            if (Matrix.IfEqualMatrix())
             {
                 GenerateMatrix();
             }
         }
 
-        private static bool IfOutOfMatrix(int row, int col)
-        {
-            if (row >= MatrixLength || row < 0 || col < 0 || col >= MatrixLength)
-            {
-                return true;
-            }
-
-            return false;
-        }
+       
 
         private static void MoveEmptyCell(int newRow, int newCol)
         {
-            int swapValue = currentMatrix[newRow, newCol];
-            currentMatrix[newRow, newCol] = 16;
-            currentMatrix[emptyRow, emptyCol] = swapValue;
-            emptyRow = newRow;
-            emptyCol = newCol;
+            int swapValue = Matrix.currentMatrix[newRow, newCol];
+            Matrix.currentMatrix[newRow, newCol] = 16;
+            Matrix.currentMatrix[Matrix.emptyRow, Matrix.emptyCol] = swapValue;
+            Matrix.emptyRow = newRow;
+            Matrix.emptyCol = newCol;
         }
 
-        private static void PrintMatrix()
-        {
-            Console.WriteLine(" -------------");
-            for (int i = 0; i < MatrixLength; i++)
-            {
-                Console.Write("|");
-                for (int j = 0; j < MatrixLength; j++)
-                {
-                    if (currentMatrix[i, j] != 16)
-                    {
-                        Console.Write("{0,3}", currentMatrix[i, j]);
-                    }
-                    else
-                    {                      
-                        Console.Write("   ");                        
-                    }
+       
 
-                    if (j == MatrixLength - 1)
-                    {
-                        Console.Write(" |\n");
-                    }
-                }
-            }
-
-            Console.WriteLine(" -------------");
-        }
-
-        private static void PrintWelcome()
+        private static void PrintGameDescription()
         {
             Console.WriteLine("Welcome to the game “Game Fifteen”.\nPlease try to arrange the numbers sequentially.\n" +
             "Use 'top' to view the top scoreboard, 'restart' to start a new game \nand 'exit' to quit the game.\n\n");
         }
 
-        private static bool IfEqualMatrix()
-        {
-            for (int i = 0; i < MatrixLength; i++)
-            {
-                for (int j = 0; j < MatrixLength; j++)
-                {
-                    if (currentMatrix[i, j] != solvedMatrix[i, j])
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
+       
 
         private static void GameWon(int moves)
         {
@@ -162,8 +97,8 @@
         static void Main()
         {
             GenerateMatrix();
-            PrintWelcome();
-            PrintMatrix();
+            PrintGameDescription();
+            Matrix.Print();
             MainAlgorithm();
         }
 
@@ -175,13 +110,13 @@
             while (inputString.CompareTo("exit") != 0)
             {
                 ExecuteComand(inputString, ref moves);
-                if (IfEqualMatrix())
+                if (Matrix.IfEqualMatrix())
                 {
                     GameWon(moves);
                     ScoreBoard.PrintScoreBoard();
                     GenerateMatrix();
-                    PrintWelcome();
-                    PrintMatrix();
+                    PrintGameDescription();
+                    Matrix.Print();
                     moves = 0;
                 }
 
@@ -198,13 +133,13 @@
 	        {
                 moves = 0;                    
                 GenerateMatrix();
-                PrintWelcome();
-                PrintMatrix();               
+                PrintGameDescription();
+                Matrix.Print();               
 	        }
             else if(inputString == "top")
             {
                 ScoreBoard.PrintScoreBoard();
-                PrintMatrix();                    
+                Matrix.Print();                    
             }
             else
             {
@@ -228,10 +163,10 @@
                 int newCol = 0;
                 for (int i = 0; i < 4; i++)
                 {
-                    newRow = emptyRow + directionRow[i];
-                    newCol = emptyCol + directionCol[i];
+                    newRow = Matrix.emptyRow + directionRow[i];
+                    newCol = Matrix.emptyCol + directionCol[i];
 
-                    if (IfOutOfMatrix(newRow, newCol))
+                    if (Matrix.IfOutOfMatrix(newRow, newCol))
                     {
                         if (i == 3)
                         {
@@ -241,11 +176,11 @@
                         continue;
                     }
 
-                    if (currentMatrix[newRow, newCol] == number)
+                    if (Matrix.currentMatrix[newRow, newCol] == number)
                     {
                         MoveEmptyCell(newRow, newCol);
                         moves++;
-                        PrintMatrix();
+                        Matrix.Print();
                         break;
                     }
 
