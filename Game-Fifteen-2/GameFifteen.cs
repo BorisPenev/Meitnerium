@@ -1,9 +1,6 @@
 ﻿namespace GameFifteen
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     class GameFifteen
     {
@@ -177,7 +174,7 @@
             string inputString = Console.ReadLine();
             while (inputString.CompareTo("exit") != 0)
             {
-                ExecuteComand(inputString, moves);
+                ExecuteComand(inputString, ref moves);
                 if (IfEqualMatrix())
                 {
                     GameWon(moves);
@@ -195,7 +192,7 @@
             Console.WriteLine("Good bye!");
         }
 
-        private static void ExecuteComand(string inputString, int moves)
+        private static void ExecuteComand(string inputString, ref int moves)
         {
             if (inputString == "restart")
 	        {
@@ -211,11 +208,11 @@
             }
             else
             {
-                 MakeMove(inputString, moves);
+                 MakeMove(inputString, ref moves);
             }
         }
   
-        private static void MakeMove(string inputString, int moves)
+        private static void MakeMove(string inputString, ref int moves)
         {
             int number = 0;
             bool isNumber = int.TryParse(inputString, out number);
