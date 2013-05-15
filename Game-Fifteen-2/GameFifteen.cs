@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Wintellect.PowerCollections;
 
     class GameFifteen
     {
@@ -30,7 +29,7 @@
 
         static int[] directionRow = new int[4] { -1, 0, 1, 0 };
         static int[] directionCol = new int[4] { 0, 1, 0, -1 };
-        static OrderedMultiDictionary<int, string> scoreboard = new OrderedMultiDictionary<int, string>(true);
+        
 
         private static void GenerateMatrix()
         {
@@ -120,7 +119,7 @@
 
         private static void PrintWelcome()
         {
-            Console.WriteLine("Welcome to the game “15”.\nPlease try to arrange the numbers sequentially.\n" +
+            Console.WriteLine("Welcome to the game “Game Fifteen”.\nPlease try to arrange the numbers sequentially.\n" +
             "Use 'top' to view the top scoreboard, 'restart' to start a new game \nand 'exit' to quit the game.\n\n");
         }
 
@@ -140,85 +139,27 @@
             return true;
         }
 
-        private static bool IfGoesToBoard(int moves)
-        {
-            foreach (var score in scoreboard)
-            {
-                if (moves < score.Key)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private static void RemoveLastScore()
-        {
-            if (scoreboard.Last().Value.Count > 0)
-            {
-                string[] values = new string[scoreboard.Last().Value.Count];
-                scoreboard.Last().Value.CopyTo(values, 0);
-                scoreboard.Last().Value.Remove(values.Last());
-            }
-            else
-            {
-                int[] keys = new int[scoreboard.Count];
-                scoreboard.Keys.CopyTo(keys, 0);
-                scoreboard.Remove(keys.Last());
-            }
-        }
-
         private static void GameWon(int moves)
         {
             Console.WriteLine("Congratulations! You won the game in {0} moves.", moves);
             int scorersCount = 0;
-            foreach (var scorer in scoreboard)
+            foreach (var scorer in ScoreBoard.scoreboard)
             {
                 scorersCount += scorer.Value.Count;
             }
 
             if (scorersCount == 5)
             {
-                if (IfGoesToBoard(moves))
+                if (ScoreBoard.IfGoesToBoard(moves))
                 {
-                    RemoveLastScore();
-                    Points(moves);
+                    ScoreBoard.RemoveLastScore();
+                    ScoreBoard.Points(moves);
                 }
             }
             else
             {
-                Points(moves);
+                ScoreBoard.Points(moves);
             }
-        }
-
-        private static void Points(int moves)
-        {
-            Console.Write("Please enter your name for the top scoreboard: ");
-            string name = Console.ReadLine();
-            scoreboard.Add(moves, name);
-        }
-
-        private static void PrintScoreBoard()
-        {
-            if (scoreboard.Count == 0)
-            {
-                Console.WriteLine("Scoreboard is empty");
-                return;
-            }
-
-            Console.WriteLine("Scoreboard:");
-            int i = 1;
-            foreach (var score in scoreboard)
-            {
-                foreach (var value in score.Value)
-                {
-                    Console.WriteLine("{0}. {1} --> {2} moves", i, value, score.Key);
-                    i++;
-                }
-            }
-
-            Console.WriteLine();
         }
 
         static void Main()
@@ -240,7 +181,7 @@
                 if (IfEqualMatrix())
                 {
                     GameWon(moves);
-                    PrintScoreBoard();
+                    ScoreBoard.PrintScoreBoard();
                     GenerateMatrix();
                     PrintWelcome();
                     PrintMatrix();
@@ -265,7 +206,7 @@
 	        }
             else if(inputString == "top")
             {
-                PrintScoreBoard();
+                ScoreBoard.PrintScoreBoard();
                 PrintMatrix();                    
             }
             else
