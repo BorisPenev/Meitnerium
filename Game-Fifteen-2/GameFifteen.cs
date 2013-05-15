@@ -4,72 +4,11 @@
 
     class GameFifteen
     {
-        
-
-        static int[] directionRow = new int[4] { -1, 0, 1, 0 };
-        static int[] directionCol = new int[4] { 0, 1, 0, -1 };
-        
-
-        private static void GenerateMatrix()
-        {
-            int value = 1;
-            Matrix.emptyRow = 3;
-            Matrix.emptyCol = 3;
-
-            for (int i = 0; i < Matrix.MatrixLength; i++)
-            {
-                for (int j = 0; j < Matrix.MatrixLength; j++)
-                {
-                    Matrix.currentMatrix[i, j] = value;
-                    value++;
-                }
-            }
-
-            int randomMoves = Matrix.random.Next(4, 7);
-
-            for (int i = 0; i < randomMoves; i++)
-            {
-                int randomDirection = Matrix.random.Next(4);
-                int newRow = Matrix.emptyRow + directionRow[randomDirection];
-                int newCol = Matrix.emptyCol + directionCol[randomDirection];
-
-                if (Matrix.IfOutOfMatrix(newRow, newCol))
-                {
-                    i--;
-                    continue;
-                }
-                else
-                {
-                    MoveEmptyCell(newRow, newCol);
-                }
-            }
-
-            if (Matrix.IfEqualMatrix())
-            {
-                GenerateMatrix();
-            }
-        }
-
-       
-
-        private static void MoveEmptyCell(int newRow, int newCol)
-        {
-            int swapValue = Matrix.currentMatrix[newRow, newCol];
-            Matrix.currentMatrix[newRow, newCol] = 16;
-            Matrix.currentMatrix[Matrix.emptyRow, Matrix.emptyCol] = swapValue;
-            Matrix.emptyRow = newRow;
-            Matrix.emptyCol = newCol;
-        }
-
-       
-
         private static void PrintGameDescription()
         {
             Console.WriteLine("Welcome to the game “Game Fifteen”.\nPlease try to arrange the numbers sequentially.\n" +
             "Use 'top' to view the top scoreboard, 'restart' to start a new game \nand 'exit' to quit the game.\n\n");
         }
-
-       
 
         private static void GameWon(int moves)
         {
@@ -96,27 +35,28 @@
 
         static void Main()
         {
-            GenerateMatrix();
+            Matrix matrix = new Matrix();
             PrintGameDescription();
-            Matrix.Print();
-            MainAlgorithm();
+            matrix.Print();
+            MainAlgorithm(matrix);
         }
 
-        private static void MainAlgorithm()
+        private static void MainAlgorithm(Matrix matrix)
         {
             int moves = 0;
             Console.Write("Enter a number to move: ");
             string inputString = Console.ReadLine();
+
             while (inputString.CompareTo("exit") != 0)
             {
-                ExecuteComand(inputString, ref moves);
-                if (Matrix.IfEqualMatrix())
+                ExecuteComand(matrix, inputString, ref moves);
+                if (matrix.CheckIfSolved())
                 {
                     GameWon(moves);
                     ScoreBoard.PrintScoreBoard();
-                    GenerateMatrix();
+                    matrix = new Matrix();
                     PrintGameDescription();
-                    Matrix.Print();
+                    matrix.Print();
                     moves = 0;
                 }
 
@@ -127,27 +67,27 @@
             Console.WriteLine("Good bye!");
         }
 
-        private static void ExecuteComand(string inputString, ref int moves)
+        private static void ExecuteComand(Matrix matrix, string inputString, ref int moves)
         {
             if (inputString == "restart")
-	        {
-                moves = 0;                    
-                GenerateMatrix();
+            {
+                moves = 0;
+                matrix = new Matrix();
                 PrintGameDescription();
-                Matrix.Print();               
-	        }
-            else if(inputString == "top")
+                matrix.Print();
+            }
+            else if (inputString == "top")
             {
                 ScoreBoard.PrintScoreBoard();
-                Matrix.Print();                    
+                matrix.Print();
             }
             else
             {
-                 MakeMove(inputString, ref moves);
+                MakeMove(matrix, inputString, ref moves);
             }
         }
-  
-        private static void MakeMove(string inputString, ref int moves)
+
+        private static void MakeMove(Matrix matrix, string inputString, ref int moves)
         {
             int number = 0;
             bool isNumber = int.TryParse(inputString, out number);
@@ -163,10 +103,10 @@
                 int newCol = 0;
                 for (int i = 0; i < 4; i++)
                 {
-                    newRow = Matrix.emptyRow + directionRow[i];
-                    newCol = Matrix.emptyCol + directionCol[i];
+                    newRow = matrix.EmptyRow + Direction.Row[i];
+                    newCol = matrix.EmptyCol + Direction.Col[i];
 
-                    if (Matrix.IfOutOfMatrix(newRow, newCol))
+                    if (matrix.IfOutOfMatrix(newRow, newCol))
                     {
                         if (i == 3)
                         {
@@ -176,11 +116,11 @@
                         continue;
                     }
 
-                    if (Matrix.currentMatrix[newRow, newCol] == number)
+                    if (matrix.Body[newRow, newCol] == number)
                     {
-                        MoveEmptyCell(newRow, newCol);
+                        matrix.MoveEmptyCell(newRow, newCol);
                         moves++;
-                        Matrix.Print();
+                        matrix.Print();
                         break;
                     }
 
@@ -194,7 +134,7 @@
             {
                 Console.WriteLine("Invalid move");
                 return;
-            }           
+            }
         }
     }
 }
