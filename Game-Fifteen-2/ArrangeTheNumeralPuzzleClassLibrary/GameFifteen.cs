@@ -14,7 +14,7 @@
         {
             Console.WriteLine("Congratulations! You won the game in {0} moves.", moves);
             int scorersCount = 0;
-            foreach (var scorer in ScoreBoard.scoreboard)
+            foreach (var scorer in ScoreBoard.Scoreboard)
             {
                 scorersCount += scorer.Value.Count;
             }

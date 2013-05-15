@@ -1,26 +1,26 @@
-﻿using System;
-using System.Linq;
-using Wintellect.PowerCollections;
-
-namespace ArrangeTheNumeralPuzzleClassLibrary
+﻿namespace ArrangeTheNumeralPuzzleClassLibrary
 {
+    using System;
+    using System.Linq;
+    using Wintellect.PowerCollections;
+
     public static class ScoreBoard
     {
-        public static OrderedMultiDictionary<int, string> scoreboard = new OrderedMultiDictionary<int, string>(true);
+        public static OrderedMultiDictionary<int, string> Scoreboard = new OrderedMultiDictionary<int, string>(true);
 
         public static void RemoveLastScore()
         {
-            if (scoreboard.Last().Value.Count > 0)
+            if (Scoreboard.Last().Value.Count > 0)
             {
-                string[] values = new string[scoreboard.Last().Value.Count];
-                scoreboard.Last().Value.CopyTo(values, 0);
-                scoreboard.Last().Value.Remove(values.Last());
+                string[] values = new string[Scoreboard.Last().Value.Count];
+                Scoreboard.Last().Value.CopyTo(values, 0);
+                Scoreboard.Last().Value.Remove(values.Last());
             }
             else
             {
-                int[] keys = new int[scoreboard.Count];
-                scoreboard.Keys.CopyTo(keys, 0);
-                scoreboard.Remove(keys.Last());
+                int[] keys = new int[Scoreboard.Count];
+                Scoreboard.Keys.CopyTo(keys, 0);
+                Scoreboard.Remove(keys.Last());
             }
         }
 
@@ -28,12 +28,12 @@ namespace ArrangeTheNumeralPuzzleClassLibrary
         {
             Console.Write("Please enter your name for the top scoreboard: ");
             string name = Console.ReadLine();
-            scoreboard.Add(moves, name);
+            Scoreboard.Add(moves, name);
         }
 
         public static bool IfGoesToBoard(int moves)
         {
-            foreach (var score in scoreboard)
+            foreach (var score in Scoreboard)
             {
                 if (moves < score.Key)
                 {
@@ -46,7 +46,7 @@ namespace ArrangeTheNumeralPuzzleClassLibrary
 
         public static void PrintScoreBoard()
         {
-            if (scoreboard.Count == 0)
+            if (Scoreboard.Count == 0)
             {
                 Console.WriteLine("Scoreboard is empty");
                 return;
@@ -54,7 +54,7 @@ namespace ArrangeTheNumeralPuzzleClassLibrary
 
             Console.WriteLine("Scoreboard:");
             int i = 1;
-            foreach (var score in scoreboard)
+            foreach (var score in Scoreboard)
             {
                 foreach (var value in score.Value)
                 {

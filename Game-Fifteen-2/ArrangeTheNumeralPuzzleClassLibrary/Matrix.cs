@@ -1,26 +1,29 @@
-﻿using System;
-
-namespace ArrangeTheNumeralPuzzleClassLibrary
+﻿namespace ArrangeTheNumeralPuzzleClassLibrary
 {
+    using System;
+
     public class Matrix
     {
         private const int MatrixLength = 4;
         private static readonly Random random = new Random();
 
         public int[,] Body { get; private set; }
-        public int EmptyRow { get; set; }
-        public int EmptyCol { get; set; }
+
+        public int EmptyRow { get; private set; }
+
+        public int EmptyCol { get; private set; }
 
         public Matrix()
         {
             this.EmptyRow = MatrixLength - 1;
             this.EmptyCol = MatrixLength - 1;
-            InitializeBody();
+            this.InitializeBody();
         }
 
         private void InitializeBody()
         {
             this.Body = new int[MatrixLength, MatrixLength];
+
             int appendedValue = 1;
             for (int i = 0; i < MatrixLength; i++)
             {
@@ -31,7 +34,7 @@ namespace ArrangeTheNumeralPuzzleClassLibrary
                 }
             }
 
-            RandomizeBody();
+            this.RandomizeBody();
         }
 
         private void RandomizeBody()
@@ -44,20 +47,20 @@ namespace ArrangeTheNumeralPuzzleClassLibrary
                 int newRow = this.EmptyRow + Direction.Row[randomDirection];
                 int newCol = this.EmptyCol + Direction.Col[randomDirection];
 
-                if (IfOutOfMatrix(newRow, newCol))
+                if (this.IfOutOfMatrix(newRow, newCol))
                 {
                     i--;
                     continue;
                 }
                 else
                 {
-                    MoveEmptyCell(newRow, newCol);
+                    this.MoveEmptyCell(newRow, newCol);
                 }
             }
 
-            if (CheckIfSolved())
+            if (this.CheckIfSolved())
             {
-                InitializeBody();
+                this.InitializeBody();
             }
         }
 
