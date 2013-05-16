@@ -6,7 +6,7 @@
     {
         static void Main(string[] args)
         {
-            Matrix matrix = new Matrix();
+            GameField matrix = new GameField();           
             GameFifteen.PrintGameDescription();
             matrix.Print();
             GameFifteen.MainAlgorithm(matrix);

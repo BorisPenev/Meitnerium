@@ -45,9 +45,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ArrangeTheNumeralPuzzleClassLibrary\ArrangeTheNumeralPuzzleClassLibrary.csproj">
       <Project>{3c6a0017-bcef-44e9-b24f-9f20748ad315}</Project>
       <Name>ArrangeTheNumeralPuzzleClassLibrary</Name>

@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class Matrix
+    public class GameField
     {
         private const int MatrixLength = 4;
         private static readonly Random random = new Random();
@@ -13,16 +13,16 @@
 
         public int EmptyCol { get; private set; }
 
-        public Matrix()
-        {
-            this.EmptyRow = MatrixLength - 1;
-            this.EmptyCol = MatrixLength - 1;
+        public GameField()
+        {           
             this.InitializeBody();
         }
 
         private void InitializeBody()
         {
             this.Body = new int[MatrixLength, MatrixLength];
+            this.EmptyRow = MatrixLength - 1;
+            this.EmptyCol = MatrixLength - 1;
 
             int appendedValue = 1;
             for (int i = 0; i < MatrixLength; i++)
@@ -33,7 +33,7 @@
                     appendedValue++;
                 }
             }
-
+            
             this.RandomizeBody();
         }
 

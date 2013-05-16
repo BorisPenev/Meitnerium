@@ -33,7 +33,7 @@
             }
         }
 
-        public static void MainAlgorithm(Matrix matrix)
+        public static void MainAlgorithm(GameField gameField)
         {
             int moves = 0;
             Console.Write("Enter a number to move: ");
@@ -41,14 +41,14 @@
 
             while (inputString.CompareTo("exit") != 0)
             {
-                ExecuteComand(matrix, inputString, ref moves);
-                if (matrix.CheckIfSolved())
+                ExecuteComand(gameField, inputString, ref moves);
+                if (gameField.CheckIfSolved())
                 {
                     GameWon(moves);
                     ScoreBoard.PrintScoreBoard();
-                    matrix = new Matrix();
+                    gameField = new GameField();
                     PrintGameDescription();
-                    matrix.Print();
+                    gameField.Print();
                     moves = 0;
                 }
 
@@ -59,12 +59,12 @@
             Console.WriteLine("Good bye!");
         }
 
-        private static void ExecuteComand(Matrix matrix, string inputString, ref int moves)
+        private static void ExecuteComand(GameField matrix, string inputString, ref int moves)
         {
             if (inputString == "restart")
             {
                 moves = 0;
-                matrix = new Matrix();
+                matrix = new GameField();
                 PrintGameDescription();
                 matrix.Print();
             }
@@ -79,7 +79,7 @@
             }
         }
 
-        private static void MakeMove(Matrix matrix, string inputString, ref int moves)
+        private static void MakeMove(GameField matrix, string inputString, ref int moves)
         {
             int number = 0;
             bool isNumber = int.TryParse(inputString, out number);
