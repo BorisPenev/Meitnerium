@@ -66,15 +66,6 @@
 
         public void MoveEmptyCell(int newRow, int newCol)
         {
-            if (newRow > this.EmptyRow)
-            {
-                throw new ArgumentOutOfRangeException("Invalid movement of the row for the empty cell!");
-            }
-            else if (newCol > this.EmptyCol)
-            {
-                throw new ArgumentOutOfRangeException("Invalid movement of the column for the empty cell!");
-            }
-
             int swapValue = this.Body[newRow, newCol];
             this.Body[newRow, newCol] = this.Body[this.EmptyRow, this.EmptyCol];
             this.Body[this.EmptyRow, this.EmptyCol] = swapValue;
