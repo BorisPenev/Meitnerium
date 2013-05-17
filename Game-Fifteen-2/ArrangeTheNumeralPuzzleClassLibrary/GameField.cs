@@ -66,6 +66,15 @@
 
         public void MoveEmptyCell(int newRow, int newCol)
         {
+            if (newRow > this.EmptyRow)
+            {
+                throw new ArgumentOutOfRangeException("Invalid movement of the row for the empty cell!");
+            }
+            else if (newCol > this.EmptyCol)
+            {
+                throw new ArgumentOutOfRangeException("Invalid movement of the column for the empty cell!");
+            }
+
             int swapValue = this.Body[newRow, newCol];
             this.Body[newRow, newCol] = this.Body[this.EmptyRow, this.EmptyCol];
             this.Body[this.EmptyRow, this.EmptyCol] = swapValue;
@@ -76,7 +85,7 @@
         public bool IfOutOfMatrix(int row, int col)
         {
             if (row >= MatrixLength || row < 0 || col < 0 || col >= MatrixLength)
-            {
+            {               
                 return true;
             }
 
@@ -86,21 +95,21 @@
         public void Print()
         {
             Console.WriteLine(" -------------");
-            for (int i = 0; i < MatrixLength; i++)
+            for (int row = 0; row < MatrixLength; row++)
             {
                 Console.Write("|");
-                for (int j = 0; j < MatrixLength; j++)
+                for (int col = 0; col < MatrixLength; col++)
                 {
-                    if (i != this.EmptyRow || j != this.EmptyCol)
+                    if (row != this.EmptyRow || col != this.EmptyCol)
                     {
-                        Console.Write("{0,3}", this.Body[i, j]);
+                        Console.Write("{0,3}", this.Body[row, col]);
                     }
                     else
                     {
                         Console.Write("   ");
                     }
 
-                    if (j == MatrixLength - 1)
+                    if (col == MatrixLength - 1)
                     {
                         Console.Write(" |\n");
                     }
@@ -120,11 +129,11 @@
                 { 13, 14, 15, 16 }
             };
 
-            for (int i = 0; i < MatrixLength; i++)
+            for (int row = 0; row < MatrixLength; row++)
             {
-                for (int j = 0; j < MatrixLength; j++)
+                for (int col = 0; col < MatrixLength; col++)
                 {
-                    if (this.Body[i, j] != solvedMatrix[i, j])
+                    if (this.Body[row, col] != solvedMatrix[row, col])
                     {
                         return false;
                     }

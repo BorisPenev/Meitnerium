@@ -13,7 +13,7 @@ namespace GameFifteenUnitTests
         {
             GameField gameField = new GameField();
             SetGameFieldBody(gameField, new int[,]
-                { 
+            { 
                 { 1, 2, 3, 4 }, 
                 { 5, 6, 7, 8 }, 
                 { 9, 10, 11, 16 }, 
@@ -22,7 +22,7 @@ namespace GameFifteenUnitTests
 
             gameField.MoveEmptyCell(3, 3);
             int[,] expected = 
-                { 
+            { 
                 { 1, 2, 3, 4 }, 
                 { 5, 6, 7, 8 }, 
                 { 9, 10, 11, 12 }, 
@@ -31,8 +31,6 @@ namespace GameFifteenUnitTests
 
             CollectionAssert.AreEqual(gameField.Body, expected);
         }
-
-
 
         private GameField SetGameFieldBody (GameField gameField, int[,] matrix)
         {
