@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ArrangeTheNumeralPuzzleClassLibrary;
 using System.Text;
@@ -65,18 +64,27 @@ namespace GameFifteenUnitTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void IfOutOfMatrixTest()
+        {
+            GameField gameField = new GameField();
+            Assert.IsTrue(gameField.IfOutOfMatrix(5,0));
+        }
+
+        [TestMethod]
         public void TestPrintMatrix()
         {
             GameField gameField = new GameField();
             SetGameFieldBody(gameField, new int[,]
             { 
                 { 1, 2, 3, 4 }, 
-                { 5, 9, 7, 8 }, 
-                { 6, 10, 15, 12 }, 
-                { 16, 14, 11, 13 }
+                { 5, 6, 7, 8 }, 
+                { 9, 10, 15, 11 }, 
+                { 13, 14, 12, 16 }
             });
 
-            string expected = " -------------\r\n|  1  2  3  4 |\r\n|  5  9  7  8 |\r\n|  6 10 15 12 |\r\n|    14 11 13 |\r\n -------------\r\n";
+            string expected = " -------------\r\n|  1  2  3  4 |\r\n|  5  6  7  8 |\r\n|  9 10 15 11 |\r\n| 13 14 12    |\r\n -------------\r\n";
+             
             StringBuilder sb = new StringBuilder();
             Console.SetOut(new System.IO.StringWriter(sb));
             gameField.Print();
@@ -99,5 +107,6 @@ namespace GameFifteenUnitTests
             }
             return gameField;
         }
+
     }
 }
