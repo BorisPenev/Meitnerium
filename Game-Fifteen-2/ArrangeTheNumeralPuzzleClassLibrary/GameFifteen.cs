@@ -4,7 +4,8 @@
 
     public class GameFifteen
     {
-        public static void PrintGameDescription()
+        private static bool runGame;
+        private static void PrintGameDescription()
         {
             Console.WriteLine("Welcome to the game “Game Fifteen”.\nPlease try to arrange the numbers sequentially.\n" +
             "Use 'top' to view the top scoreboard, 'restart' to start a new game \nand 'exit' to quit the game.\n\n");
@@ -13,120 +14,97 @@
         private static void GameWon(int moves)
         {
             Console.WriteLine("Congratulations! You won the game in {0} moves.", moves);
-            int scorersCount = 0;
-            foreach (var scorer in ScoreBoard.Scoreboard)
-            {
-                scorersCount += scorer.Value.Count;
-            }
-
-            if (scorersCount == 5)
-            {
-                if (ScoreBoard.IfGoesToBoard(moves))
-                {
-                    ScoreBoard.RemoveLastScore();
-                    ScoreBoard.Points(moves);
-                }
-            }
-            else
-            {
-                ScoreBoard.Points(moves);
-            }
+            ScoreBoard.IfGoesToScoreboard(moves);
+            ScoreBoard.PrintScoreBoard();
         }
 
-        public static void MainAlgorithm(GameField gameField)
+        public static void MainAlgorithm(GameField gameField, int moves)
         {
-            int moves = 0;
-            Console.Write("Enter a number to move: ");
-            string inputString = Console.ReadLine();
-
-            while (inputString.CompareTo("exit") != 0)
+            while (runGame)
             {
+                Console.Write("Enter a number to move: ");
+                string inputString = Console.ReadLine();
                 ExecuteComand(gameField, inputString, ref moves);
                 if (gameField.CheckIfSolved())
                 {
                     GameWon(moves);
-                    ScoreBoard.PrintScoreBoard();
-                    gameField = new GameField();
-                    PrintGameDescription();
-                    gameField.Print();
-                    moves = 0;
+                    InitializeGame();
                 }
-
-                Console.Write("Enter a number to move: ");
-                inputString = Console.ReadLine();
             }
-
-            Console.WriteLine("Good bye!");
         }
 
         private static void ExecuteComand(GameField matrix, string inputString, ref int moves)
         {
-            if (inputString == "restart")
+            int inputValue = 0;
+            bool isNumber = int.TryParse(inputString, out inputValue);
+
+            if (isNumber && 0 < inputValue && inputValue < 16)
             {
-                moves = 0;
-                matrix = new GameField();
-                PrintGameDescription();
-                matrix.Print();
+                MakeMove(matrix, inputValue, ref moves);
+            }
+            else if (inputString == "restart")
+            {
+                InitializeGame();
             }
             else if (inputString == "top")
             {
                 ScoreBoard.PrintScoreBoard();
                 matrix.Print();
             }
-            else
+            else if (inputString == "exit")
             {
-                MakeMove(matrix, inputString, ref moves);
+                Console.WriteLine("Good bye!");
+                runGame = false;
             }
-        }
-
-        private static void MakeMove(GameField matrix, string inputString, ref int moves)
-        {
-            int number = 0;
-            bool isNumber = int.TryParse(inputString, out number);
-            if (!isNumber)
+            else
             {
                 Console.WriteLine("Invalid comand!");
                 return;
             }
+        }
 
-            if (number < 16 && number > 0)
+        private static void MakeMove(GameField matrix, int inputValue, ref int moves)
+        {
+            int newRow = 0;
+            int newCol = 0;
+            for (int i = 0; i < 4; i++)
             {
-                int newRow = 0;
-                int newCol = 0;
-                for (int i = 0; i < 4; i++)
+                newRow = matrix.EmptyRow + Direction.Row[i];
+                newCol = matrix.EmptyCol + Direction.Col[i];
+
+                if (matrix.IfOutOfMatrix(newRow, newCol))
                 {
-                    newRow = matrix.EmptyRow + Direction.Row[i];
-                    newCol = matrix.EmptyCol + Direction.Col[i];
-
-                    if (matrix.IfOutOfMatrix(newRow, newCol))
-                    {
-                        if (i == 3)
-                        {
-                            Console.WriteLine("Invalid move");
-                        }
-
-                        continue;
-                    }
-
-                    if (matrix.Body[newRow, newCol] == number)
-                    {
-                        matrix.MoveEmptyCell(newRow, newCol);
-                        moves++;
-                        matrix.Print();
-                        break;
-                    }
-
                     if (i == 3)
                     {
                         Console.WriteLine("Invalid move");
                     }
+
+                    continue;
+                }
+
+                if (matrix.Body[newRow, newCol] == inputValue)
+                {
+                    matrix.MoveEmptyCell(newRow, newCol);
+                    moves++;
+                    matrix.Print();
+                    break;
+                }
+
+                if (i == 3)
+                {
+                    Console.WriteLine("Invalid move");
                 }
             }
-            else
-            {
-                Console.WriteLine("Invalid move");
-                return;
-            }
+        }
+
+        public static void InitializeGame()
+        {
+            GameField gameField = new GameField();
+            GameFifteen.PrintGameDescription();
+            gameField.Print();
+            int moves = 0;
+            runGame = true;
+            MainAlgorithm(gameField, moves);
         }
     }
 }

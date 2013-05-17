@@ -6,10 +6,7 @@
     {
         static void Main(string[] args)
         {
-            GameField matrix = new GameField();           
-            GameFifteen.PrintGameDescription();
-            matrix.Print();
-            GameFifteen.MainAlgorithm(matrix);
+            GameFifteen.InitializeGame();
         }
     }
 }
