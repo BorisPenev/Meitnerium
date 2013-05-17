@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class GameFifteen
+    public class GameFifteenEngine
     {
         private static bool runGame;
         private static void PrintGameDescription()
@@ -100,7 +100,7 @@
         public static void InitializeGame()
         {
             GameField gameField = new GameField();
-            GameFifteen.PrintGameDescription();
+            GameFifteenEngine.PrintGameDescription();
             gameField.Print();
             int moves = 0;
             runGame = true;
