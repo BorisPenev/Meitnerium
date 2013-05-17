@@ -2,24 +2,43 @@
 {
     using System;
 
+    /// <summary>
+    /// This is the class that runs the main logic of the game.
+    /// </summary>
     public class GameFifteenEngine
     {
         private bool runGame;
         private GameField gameField;
         
-        private  void PrintGameDescription()
+        /// <summary>
+        /// Prints the initial game description above the gamefield.
+        /// </summary>
+        private void PrintGameDescription()
         {
             Console.WriteLine("Welcome to the game “Game Fifteen”.\nPlease try to arrange the numbers sequentially.\n" +
             "Use 'top' to view the top scoreboard, 'restart' to start a new game \nand 'exit' to quit the game.\n\n");
         }
 
-        private  void GameWon(int moves)
+        /// <summary>
+        /// This method prints a message with how many moves you have won the game 
+        /// if you have a higher score the someone of the top 5 in the scoreboard.
+        /// </summary>
+        /// <param name="moves">
+        /// This parameter is the count of the moves which you made in order to win.
+        /// </param>
+        private void GameWon(int moves)
         {
             Console.WriteLine("Congratulations! You won the game in {0} moves.", moves);
             ScoreBoard.IfGoesToScoreboard(moves);
             ScoreBoard.PrintScoreBoard();
         }
 
+        /// <summary>
+        /// In here we ensure that the game is going to run endlessly, until
+        /// you enter a command "exit" to exit the game.
+        /// You can endter other commands like "top" to show the current scoreboard,
+        /// and command "restart" to generate a new gamefield.
+        /// </summary>
         public void MainAlgorithm(int moves)
         {
             while (runGame)
@@ -35,7 +54,12 @@
             }
         }
 
-        private  void ExecuteComand(string inputString, ref int moves)
+        /// <summary>
+        /// Here we actually check which command we have entered in the console.
+        /// </summary>
+        /// <param name="inputString">Takes the imput.</param>
+        /// <param name="moves">Takes the moves.</param>
+        private void ExecuteComand(string inputString, ref int moves)
         {
             int inputValue = 0;
             bool isNumber = int.TryParse(inputString, out inputValue);
@@ -65,6 +89,11 @@
             }
         }
 
+        /// <summary>
+        /// Here we swap the picked number if possible with the empty " " position.
+        /// </summary>
+        /// <param name="inputValue">The imput from the console usually a number.</param>
+        /// <param name="moves">\Takes moves and increments it when a move of the empty " " position is made.</param>
         private void MakeMove(int inputValue, ref int moves)
         {
             int newRow = 0;
@@ -99,6 +128,9 @@
             }
         }
 
+        /// <summary>
+        /// Here we create and print the gameField with its game description along with the main algorithm.
+        /// </summary>
         public void InitializeGame()
         {
             this.gameField = new GameField();

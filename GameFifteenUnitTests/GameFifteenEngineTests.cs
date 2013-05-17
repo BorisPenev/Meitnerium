@@ -1,10 +1,10 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ArrangeTheNumeralPuzzleClassLibrary;
-using System.Text;
-
-namespace GameFifteenUnitTests
+﻿namespace GameFifteenUnitTests
 {
+    using System;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using ArrangeTheNumeralPuzzleClassLibrary;
+    using System.Text;
+
     [TestClass]
     public class GameFifteenEngineTests
     {
@@ -16,7 +16,6 @@ namespace GameFifteenUnitTests
             StringBuilder sb = new StringBuilder();
             Console.SetOut(new System.IO.StringWriter(sb));
             typeof(GameFifteenEngine).GetMethod("ExecuteComand(\"dggg\", 5)");
-            //Assert.AreEqual(expected, sb.ToString(), "Scoreboard.Print not working.");
             StringAssert.Equals(expected, sb.ToString());
         }
     }

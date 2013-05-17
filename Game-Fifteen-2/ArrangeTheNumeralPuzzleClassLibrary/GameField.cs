@@ -18,6 +18,11 @@
             this.InitializeBody();
         }
 
+
+        /// <summary>
+        /// Here we initialize the logic for the body of the matrix like game
+        /// and we randomize the number in the matrix.
+        /// </summary>
         private void InitializeBody()
         {
             this.Body = new int[MatrixLength, MatrixLength];
@@ -37,6 +42,10 @@
             this.RandomizeBody();
         }
 
+        /// <summary>
+        /// Here we randomize the starting position of the empty cell,
+        /// and here we can control the complexity of the game by variable: randomMoves.
+        /// </summary>
         private void RandomizeBody()
         {
             int randomMoves = random.Next(4, 5);
@@ -64,9 +73,14 @@
             }
         }
 
+        /// <summary>
+        /// Here we move and check the empty cell if its out of the range of the gamefield. 
+        /// </summary>
+        /// <param name="newRow">This is the position of the new row.</param>
+        /// <param name="newCol">This is the position of the new column.</param>
         public void MoveEmptyCell(int newRow, int newCol)
         {
-            if (newRow >= MatrixLength ||  newRow < 0 || newCol >= MatrixLength ||  newCol < 0)
+            if (newRow >= MatrixLength || newRow < 0 || newCol >= MatrixLength || newCol < 0)
             {
                 throw new IndexOutOfRangeException("Empty cell cannot be moved outside the game field.");                
             }
@@ -78,6 +92,12 @@
             this.EmptyCol = newCol;
         }
 
+        /// <summary>
+        /// Here we check if we are out of the boundaries of the gamefield.
+        /// </summary>
+        /// <param name="row">This is the position of the new row.</param>
+        /// <param name="col">This is the position of the new column.</param>
+        /// <returns></returns>
         public bool IfOutOfMatrix(int row, int col)
         {
             if (row >= MatrixLength || row < 0 || col < 0 || col >= MatrixLength)
@@ -88,6 +108,10 @@
             return false;
         }
 
+        /// <summary>
+        /// Here we check if our solution is the correct one.
+        /// </summary>
+        /// <returns>True if yes, else false</returns>
         public bool CheckIfSolved()
         {
             int[,] solvedMatrix = new int[MatrixLength, MatrixLength]
@@ -112,6 +136,9 @@
             return true;
         }
 
+        /// <summary>
+        /// Here we print the gamefield.
+        /// </summary>
         public void Print()
         {
             Console.WriteLine(" -------------");

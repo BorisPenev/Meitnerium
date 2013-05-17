@@ -1,10 +1,10 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ArrangeTheNumeralPuzzleClassLibrary;
-using System.Text;
-
-namespace GameFifteenUnitTests
+﻿namespace GameFifteenUnitTests
 {
+    using System;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using ArrangeTheNumeralPuzzleClassLibrary;
+    using System.Text;
+
     [TestClass]
     public class ScoreBoardTests
     {

@@ -8,6 +8,9 @@
     {
         private static OrderedMultiDictionary<int, string> scoresList = new OrderedMultiDictionary<int, string>(true);
 
+        /// <summary>
+        /// Removes the last score in the scoreboard with the least amount of points (moves made).
+        /// </summary>
         private static void RemoveLastScore()
         {
             if (scoresList.Last().Value.Count > 0)
@@ -24,6 +27,10 @@
             }
         }
 
+        /// <summary>
+        /// Here we can save our name or alias for the top scoreboard.
+        /// </summary>
+        /// <param name="moves">These are the moves we have made.</param>
         private static void SaveScore(int moves)
         {
             Console.Write("Please enter your name for the top scoreboard: ");
@@ -31,6 +38,11 @@
             scoresList.Add(moves, name);
         }
 
+        /// <summary>
+        /// Here we check if our number of moves are less or greater than existing alredy in the top scoreboard.
+        /// </summary>
+        /// <param name="moves">These are the moves in which we have solved the puzzle.</param>
+        /// <returns>True if our moves are less than any of the top scoreboard or true if we can get in.</returns>
         private static bool IfTopScore(int moves)
         {
             foreach (var score in scoresList)
@@ -44,6 +56,11 @@
             return false;
         }
 
+        /// <summary>
+        /// Here we check if we have filled all the 5 spots in the top scoreboard and 
+        /// if we can get in somone else's spot or there are free positions.
+        /// </summary>
+        /// <param name="moves">These are the moves in which we have solved the puzzle.</param>
         public static void IfGoesToScoreboard(int moves)
         {
             int scorersCount = 0;
@@ -66,6 +83,10 @@
             }
         }
 
+        /// <summary>
+        /// Here we print the scoreboard if it's empty and the player has entered the command "top" the message "Scoreboard is empty" is printed,
+        /// else is printed  ("{0}. {1} --> {2} moves", index, value, score.Key)
+        /// </summary>
         public static void PrintScoreBoard()
         {
             if (scoresList.Count == 0)
