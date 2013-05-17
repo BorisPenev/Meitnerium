@@ -9,6 +9,21 @@ namespace GameFifteenUnitTests
     public class GameFieldTests
     {
         [TestMethod]
+        public void EmptyRowColTest()
+        {
+            GameField gameField = new GameField();
+            SetGameFieldBody(gameField, new int[,]
+            { 
+                { 1, 2, 3, 4 }, 
+                { 5, 6, 7, 8 }, 
+                { 9, 10, 11, 16 }, 
+                { 13, 14, 15, 12 }
+            });
+            
+            Assert.AreEqual(gameField.EmptyCol,3);            
+        }
+
+        [TestMethod]
         public void MoveEmptyCellTest()
         {
             GameField gameField = new GameField();
@@ -27,6 +42,30 @@ namespace GameFifteenUnitTests
                 { 5, 6, 7, 8 }, 
                 { 9, 10, 11, 12 }, 
                 { 13, 14, 15, 16 }
+            };
+
+            CollectionAssert.AreEqual(gameField.Body, expected);
+        }
+
+        [TestMethod]
+        public void MoveEmptyCellTest2()
+        {
+            GameField gameField = new GameField();
+            SetGameFieldBody(gameField, new int[,]
+            { 
+                { 1, 2, 3, 4 }, 
+                { 5, 6, 7, 8 }, 
+                { 9, 10, 16, 11 }, 
+                { 13, 14, 15, 12 }
+            });
+
+            gameField.MoveEmptyCell(2, 3);
+            int[,] expected = 
+            { 
+                { 1, 2, 3, 4 }, 
+                { 5, 6, 7, 8 }, 
+                { 9, 10, 11, 16 }, 
+                { 13, 14, 15, 12 }
             };
 
             CollectionAssert.AreEqual(gameField.Body, expected);
@@ -63,8 +102,7 @@ namespace GameFifteenUnitTests
             gameField.MoveEmptyCell(4, 3);            
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [TestMethod]        
         public void IfOutOfMatrixTest()
         {
             GameField gameField = new GameField();

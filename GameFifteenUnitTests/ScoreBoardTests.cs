@@ -20,19 +20,16 @@ namespace GameFifteenUnitTests
         }
 
         [TestMethod]
-        public void TestScoreBoardWithScores()
-        {            
-            ScoreBoard.IfGoesToScoreboard(2);
-            StringBuilder name = new StringBuilder();
-            name.Append("ceko");
-            Console.SetIn(new System.IO.StringReader(name[0].ToString()));
+        public void IfGoesToScoreBoardTest()
+        {
+            typeof(ScoreBoard).GetField("scoresList").SetValue(3, "Boci");
 
-            string expected = "Scoreboard:\r\n1. ceko --> 2 moves\r\n";           
+            string expected = "Scoreboard:\r\n1. Boci --> 3 moves\r\n";
 
             StringBuilder sb = new StringBuilder();
             Console.SetOut(new System.IO.StringWriter(sb));
             ScoreBoard.PrintScoreBoard();
-            Assert.AreEqual(expected, sb.ToString(), "PringMatrix not working.");
+            Assert.AreEqual(expected, sb.ToString(), "Scoreboard.Print not working.");
         }
     }
 }

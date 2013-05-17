@@ -6,11 +6,7 @@
     {
         private bool runGame;
         private GameField gameField;
-
-        public GameFifteenEngine()
-        {            
-            this.runGame =  true;
-        }
+        
         private  void PrintGameDescription()
         {
             Console.WriteLine("Welcome to the game “Game Fifteen”.\nPlease try to arrange the numbers sequentially.\n" +
@@ -108,6 +104,7 @@
             this.gameField = new GameField();
             this.PrintGameDescription();
             this.gameField.Print();
+            this.runGame = true;
             int moves = 0;
             this.MainAlgorithm(moves);
         }
