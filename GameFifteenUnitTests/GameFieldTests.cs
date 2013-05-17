@@ -68,11 +68,11 @@ namespace GameFifteenUnitTests
         public void IfOutOfMatrixTest()
         {
             GameField gameField = new GameField();
-            Assert.IsTrue(gameField.IfOutOfMatrix(5,0));
+            Assert.IsTrue(gameField.IfOutOfMatrix(5,0));            
         }
 
         [TestMethod]
-        public void TestPrintMatrix()
+        public void TestGameFieldPrint()
         {
             GameField gameField = new GameField();
             SetGameFieldBody(gameField, new int[,]
@@ -88,7 +88,8 @@ namespace GameFifteenUnitTests
             StringBuilder sb = new StringBuilder();
             Console.SetOut(new System.IO.StringWriter(sb));
             gameField.Print();
-            Assert.AreEqual(expected, sb.ToString(), "PringMatrix not working.");
+            StringAssert.Equals(expected, sb.ToString());
+            
         }
         
         private GameField SetGameFieldBody (GameField gameField, int[,] matrix)

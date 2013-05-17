@@ -16,7 +16,8 @@ namespace GameFifteenUnitTests
             StringBuilder sb = new StringBuilder();
             Console.SetOut(new System.IO.StringWriter(sb));
             typeof(GameFifteenEngine).GetMethod("ExecuteComand(\"dggg\", 5)");
-            Assert.AreEqual(expected, sb.ToString(), "Scoreboard.Print not working.");
+            //Assert.AreEqual(expected, sb.ToString(), "Scoreboard.Print not working.");
+            StringAssert.Equals(expected, sb.ToString());
         }
     }
 }
