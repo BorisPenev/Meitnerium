@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Direction.cs" />
+    <Compile Include="GameFifteenEngine.cs" />
     <Compile Include="GameField.cs" />
     <Compile Include="GameFifteenEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

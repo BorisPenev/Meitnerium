@@ -66,6 +66,11 @@
 
         public void MoveEmptyCell(int newRow, int newCol)
         {
+            if (newRow >= MatrixLength ||  newRow < 0 || newCol >= MatrixLength ||  newCol < 0)
+            {
+                throw new IndexOutOfRangeException("Empty cell cannot be moved outside the game field.");                
+            }
+
             int swapValue = this.Body[newRow, newCol];
             this.Body[newRow, newCol] = this.Body[this.EmptyRow, this.EmptyCol];
             this.Body[this.EmptyRow, this.EmptyCol] = swapValue;
@@ -81,6 +86,30 @@
             }
 
             return false;
+        }
+
+        public bool CheckIfSolved()
+        {
+            int[,] solvedMatrix = new int[MatrixLength, MatrixLength]
+            { 
+                { 1, 2, 3, 4 }, 
+                { 5, 6, 7, 8 }, 
+                { 9, 10, 11, 12 }, 
+                { 13, 14, 15, 16 }
+            };
+
+            for (int row = 0; row < MatrixLength; row++)
+            {
+                for (int col = 0; col < MatrixLength; col++)
+                {
+                    if (this.Body[row, col] != solvedMatrix[row, col])
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         public void Print()
@@ -108,30 +137,6 @@
             }
 
             Console.WriteLine(" -------------");
-        }
-
-        public bool CheckIfSolved()
-        {
-            int[,] solvedMatrix = new int[MatrixLength, MatrixLength]
-            { 
-                { 1, 2, 3, 4 }, 
-                { 5, 6, 7, 8 }, 
-                { 9, 10, 11, 12 }, 
-                { 13, 14, 15, 16 }
-            };
-
-            for (int row = 0; row < MatrixLength; row++)
-            {
-                for (int col = 0; col < MatrixLength; col++)
-                {
-                    if (this.Body[row, col] != solvedMatrix[row, col])
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
+        }        
     }
 }

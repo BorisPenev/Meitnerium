@@ -6,7 +6,8 @@
     {
         static void Main(string[] args)
         {
-            GameFifteenEngine.InitializeGame();
+            GameFifteenEngine engine = new GameFifteenEngine();
+            engine.InitializeGame();
         }
     }
 }
